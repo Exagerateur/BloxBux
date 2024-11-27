@@ -212,3 +212,4 @@ function sendGameTaxWebhook($gameData,$inventory_id,$webhook="tax_logs") {
     ];
     sendWebhookEmbed($webhook, $data);
 }
+?>
