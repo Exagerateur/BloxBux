@@ -1,28 +1,78 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+    <!-- Meta Tags -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Game Page</title>
-    <link rel="stylesheet" href="style.css">
-</head>
-<body>
-    <div class="main-container">
-        <!-- Main content section -->
-        <div class="content-wrapper">
-            <h1>Welcome to the Game</h1>
-            <p>Play and challenge other users in exciting game matches!</p>
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+    <meta name="theme-color" content="#252525">
 
-            <!-- Login button -->
-            <button class="login-btn" onclick="login()">Login to Play</button>
-        </div>
-    </div>
-    
+    <!-- Title -->
+    <title>BloxLuck</title>
+
+    <!-- Scripts -->
+    <script src="js/jquery.min.js"></script>
+    <script src="js/sweetalert2.all.min.js"></script>
+    <script src="js/textFit.min.js"></script>
+    <script src="js/socket.io.min.js"></script>
+
+    <!-- Links -->
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="icon" href="img/favicon.png">
+    <link rel="stylesheet" href="css/sweetalert2-dark.css">
+
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-YOURTAGHERE"></script>
     <script>
-        function login() {
-            // Implement the login logic here (can redirect to a login page or show a login modal)
-            alert('Login functionality will go here!');
+        window.dataLayer = window.dataLayer || [];
+        function gtag() {
+            dataLayer.push(arguments);
         }
+        gtag('js', new Date());
+        gtag('config', 'G-YOURTAGHERE');
+    </script>
+</head>
+
+<body>
+    <header>
+        <div class="logo">
+            <img src="img/favicon.png" alt="BloxLuck">
+        </div>
+        <nav>
+            <button onclick="toggleMenu()" class="btn-primary mobile mobile-only">
+                <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" width="25" height="25" viewBox="0 0 16 16">
+                    <path fill="currentColor" d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z"></path>
+                </svg>
+            </button>
+            <!-- Hardcode session check -->
+            <button onclick="login()" class="btn-primary mobile">Login</button>
+        </nav>
+    </header>
+    <div class="main">
+        <p>Website Under Maintenance, we'll be back in a few hours / discord.gg/bloxluck</p>
+    </div>
+    <script>
+        // JavaScript login prompt replacement
+        function login() {
+            Swal.fire({
+                title: "Login",
+                text: "Enter your Roblox Username",
+                input: "text",
+                inputPlaceholder: "Username",
+                showCancelButton: true,
+                confirmButtonText: "Login",
+                cancelButtonText: "Cancel"
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    alert("Login functionality unavailable in static version.");
+                }
+            });
+        }
+
+        // Add other interactivity as needed
     </script>
 </body>
 </html>
