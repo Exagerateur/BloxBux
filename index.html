@@ -47,32 +47,67 @@
                     <path fill="currentColor" d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z"></path>
                 </svg>
             </button>
-            <!-- Hardcode session check -->
-            <button onclick="login()" class="btn-primary mobile">Login</button>
+            <button onclick="showLoginForm()" class="btn-primary mobile">Login</button>
         </nav>
     </header>
+
+    <!-- Main Content -->
     <div class="main">
-        <p>Website Under Maintenance, we'll be back in a few hours / discord.gg/bloxluck</p>
+        <!-- Giveaway Section -->
+        <section class="giveaway">
+            <h2>Current Giveaway</h2>
+            <div class="giveaway-details">
+                <img src="img/dog.png" alt="Dog Coin">
+                <p>Win Dog Coin! Ends in 12 hours.</p>
+            </div>
+            <div class="giveaway-details">
+                <img src="img/gem.png" alt="Gem Coin">
+                <p>Win Gem Coin! Ends in 24 hours.</p>
+            </div>
+        </section>
+
+        <!-- Coinflip Section -->
+        <section class="coinflip">
+            <h2>Start a Match</h2>
+            <div class="coinflip-frame">
+                <button class="btn-primary">Coinflip Match</button>
+                <p>Match your coins with other players!</p>
+            </div>
+        </section>
     </div>
+
+    <!-- Login Form (Hidden by Default) -->
+    <div id="loginForm" class="login-form" style="display: none;">
+        <form action="login.php" method="POST">
+            <h3>Login</h3>
+            <input type="text" name="username" placeholder="Enter your Roblox Username" required>
+            <button type="submit" class="btn-primary">Login</button>
+            <button type="button" class="btn-secondary" onclick="closeLoginForm()">Cancel</button>
+        </form>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2024 BloxLuck</p>
+    </footer>
+
     <script>
-        // JavaScript login prompt replacement
-        function login() {
-            Swal.fire({
-                title: "Login",
-                text: "Enter your Roblox Username",
-                input: "text",
-                inputPlaceholder: "Username",
-                showCancelButton: true,
-                confirmButtonText: "Login",
-                cancelButtonText: "Cancel"
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    alert("Login functionality unavailable in static version.");
-                }
-            });
+        // Show the login form
+        function showLoginForm() {
+            document.getElementById('loginForm').style.display = 'block';
         }
 
-        // Add other interactivity as needed
+        // Close the login form
+        function closeLoginForm() {
+            document.getElementById('loginForm').style.display = 'none';
+        }
+
+        // Toggle menu for mobile (example function)
+        function toggleMenu() {
+            alert('Menu toggled');
+        }
     </script>
+
 </body>
+
 </html>
