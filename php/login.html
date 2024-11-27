@@ -3,132 +3,63 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login - BloxLuck</title>
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="css/sweetalert2-dark.css">
-    <script src="js/jquery.min.js"></script>
-    <script src="js/sweetalert2.all.min.js"></script>
+    <title>BloxLuck - Login</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <script src="../js/jquery.min.js"></script>
 </head>
 <body>
-    <header>
-        <h1>BloxLuck Login</h1>
-    </header>
 
-    <!-- Login Form -->
-    <div class="login-container">
-        <form id="loginForm" class="login-form">
-            <label for="username">Username (ROBLOX)</label>
-            <input type="text" id="username" name="username" class="input-field" required>
-            <button type="submit" class="submit-btn">Login</button>
-        </form>
+    <h1>BloxLuck - Login</h1>
+
+    <!-- Form for username input -->
+    <form id="loginForm">
+        <label for="username">Enter Your Roblox Username:</label>
+        <input type="text" id="username" name="username" required>
+        <button type="submit">Submit</button>
+    </form>
+
+    <!-- Message to show code -->
+    <div id="message" style="display: none;">
+        <p>Please put this code into your Roblox description: <span id="code"></span></p>
+        <p>Once verified, you can continue logging in!</p>
     </div>
 
     <script>
-        $(document).ready(function() {
-            // Handle form submission
-            $("#loginForm").on("submit", function(event) {
-                event.preventDefault();
+        // List of words for generating the code (same as in PHP)
+        const words = [
+            "monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday",
+            "caramel", "fun", "files", "gate", "heart", "keep", "gravity", "farewell", "plastic"
+        ];
 
-                var username = $("#username").val();
+        document.getElementById("loginForm").addEventListener("submit", function(event) {
+            event.preventDefault(); // Prevent the form from submitting normally
 
-                // Validate the username
-                if (username.length < 3 || username.length > 20) {
-                    Swal.fire("Invalid Username", "Username must be between 3 and 20 characters long.", "error");
-                    return;
-                }
-                if (!/^[a-zA-Z0-9_]+$/.test(username)) {
-                    Swal.fire("Invalid Username", "Username can only contain letters, numbers, and underscores.", "error");
-                    return;
-                }
-                if (username[0] == "_" || username[username.length - 1] == "_") {
-                    Swal.fire("Invalid Username", "Username cannot start or end with an underscore.", "error");
-                    return;
-                }
-                if (username.split("_").length > 2) {
-                    Swal.fire("Invalid Username", "Username can only have one underscore.", "error");
-                    return;
-                }
+            const username = document.getElementById("username").value;
 
-                // Send the username to the server for validation
-                $.ajax({
-                    url: "php/login_handler.php", // Create this PHP script to handle the login logic
-                    type: "POST",
-                    data: { username: username },
-                    success: function(response) {
-                        // Parse the response from the server
-                        if (response === "success") {
-                            Swal.fire("Logged In!", "You have successfully logged in!", "success")
-                                .then(() => {
-                                    window.location.href = "index.html"; // Redirect to main page after login
-                                });
-                        } else {
-                            Swal.fire("Error", response, "error");
-                        }
-                    },
-                    error: function() {
-                        Swal.fire("Error", "An error occurred. Please try again.", "error");
-                    }
-                });
-            });
+            // Validate username length and format (same as PHP validation)
+            if (username.length < 3 || username.length > 20 || !/^[a-zA-Z0-9_]+$/.test(username) || username[0] === "_" || username[username.length - 1] === "_" || username.split("_").length > 2) {
+                alert("Invalid username. Please ensure it follows the correct format.");
+                return;
+            }
+
+            // Generate the code (similar to the PHP logic for generating a random code)
+            let newCode = [];
+            for (let i = 0; i < 16; i++) {
+                newCode.push(words[Math.floor(Math.random() * words.length)]);
+            }
+
+            // Join the code words into a single string
+            const codeString = newCode.join(" ");
+
+            // Display the code and message
+            document.getElementById("message").style.display = "block";
+            document.getElementById("code").innerText = codeString;
+
+            // Normally, the code would be stored in the session or database on the server, 
+            // but here we're only showing it to the user in the frontend.
+            // You may want to send the code to the server via AJAX for validation and storage.
         });
     </script>
 
-    <style>
-        /* Styling for the login page (to match your CSS style) */
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
-            color: #333;
-            margin: 0;
-            padding: 0;
-        }
-
-        header {
-            text-align: center;
-            padding: 30px;
-            background-color: #333;
-            color: white;
-        }
-
-        .login-container {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-        }
-
-        .login-form {
-            background-color: white;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
-            width: 300px;
-            text-align: center;
-        }
-
-        .input-field {
-            width: 100%;
-            padding: 10px;
-            margin: 10px 0;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-            font-size: 16px;
-        }
-
-        .submit-btn {
-            width: 100%;
-            padding: 10px;
-            background-color: #4CAF50;
-            color: white;
-            border: none;
-            border-radius: 4px;
-            font-size: 16px;
-            cursor: pointer;
-        }
-
-        .submit-btn:hover {
-            background-color: #45a049;
-        }
-    </style>
 </body>
 </html>
