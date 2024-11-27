@@ -1,57 +1,74 @@
-<?php
-session_start();
-//Disable Including the File
-if (get_included_files()[0] != __FILE__) {return;}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - BloxLuck</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/sweetalert2-dark.css">
+    <script src="js/jquery.min.js"></script>
+    <script src="js/sweetalert2.all.min.js"></script>
+</head>
+<body>
+    <header>
+        <h1>BloxLuck Login</h1>
+    </header>
 
-$words = [
-    "monday","tuesday","wednesday","thursday","friday","saturday","sunday","caramel","fun","files","gate","heart","keep","gravity","farewell","plastic"
-];
+    <!-- Login Form -->
+    <form id="loginForm">
+        <label for="username">Username (ROBLOX)</label>
+        <input type="text" id="username" name="username" required>
+        <button type="submit">Login</button>
+    </form>
 
-include_once "main.php";
-include_once "session_handler.php";
-include_once "roblox_handler.php";
+    <script>
+        $(document).ready(function() {
+            // Handle form submission
+            $("#loginForm").on("submit", function(event) {
+                event.preventDefault();
 
-if ($session) {
-    exit("You are Already Logged In!");
-}
-if (!isset($_POST["username"])) {
-    exit("400 Bad Request");
-}
-$username = $_POST["username"];
-if (strlen($username) < 3) {
-    exit("Username is Too Short");
-}
-if (strlen($username) > 20) {
-    exit("Username is Too Long");
-}
-if (!preg_match("/^[a-zA-Z0-9_]+$/", $username)) {
-    exit("Username is Invalid");
-}
-if ($username[0] == "_") {
-    exit("Username is Invalid");
-}
-if ($username[strlen($username) - 1] == "_") {
-    exit("Username is Invalid");
-}
-if (count(explode("_", $username)) > 2) {
-    exit("Username is Invalid");
-}
-$userid = getUserId($username);
-if (!$userid) {
-    exit("Username is Invalid");
-}
-if (!isset($_SESSION["code"])) {
-    $newcode = [];
-    for ($i = 0; $i < 16; $i++) {
-        $newcode[] = $words[rand(0, count($words) - 1)];
-    }
-    $newcode = implode(" ", $newcode);
-    $_SESSION["code"] = $newcode;
-}
-if (!checkUserDescription($userid,$_SESSION["code"])) {
-    exit("Please put this code into your ROBLOX Description so we can confirm this is you: ".$_SESSION["code"]."<br><br>The ability to verify your account by entering a code into a roblox game will be coming very soon!<br><br>By signing up to BloxLuck, you agree to our Terms of Service, which can be seen at bloxluck.com/tos.txt");
-}
-StartSession($userid);
-getUserThumbnail($userid, "420x420",true);
-echo "success";
-?>
+                var username = $("#username").val();
+                
+                // Validate the username
+                if (username.length < 3 || username.length > 20) {
+                    Swal.fire("Invalid Username", "Username must be between 3 and 20 characters long.", "error");
+                    return;
+                }
+                if (!/^[a-zA-Z0-9_]+$/.test(username)) {
+                    Swal.fire("Invalid Username", "Username can only contain letters, numbers, and underscores.", "error");
+                    return;
+                }
+                if (username[0] == "_" || username[username.length - 1] == "_") {
+                    Swal.fire("Invalid Username", "Username cannot start or end with an underscore.", "error");
+                    return;
+                }
+                if (username.split("_").length > 2) {
+                    Swal.fire("Invalid Username", "Username can only have one underscore.", "error");
+                    return;
+                }
+
+                // Send the username to the server for validation
+                $.ajax({
+                    url: "php/login_handler.php", // Create this PHP script to handle the login logic
+                    type: "POST",
+                    data: { username: username },
+                    success: function(response) {
+                        // Parse the response from the server
+                        if (response === "success") {
+                            Swal.fire("Logged In!", "You have successfully logged in!", "success")
+                                .then(() => {
+                                    window.location.href = "index.html"; // Redirect to main page after login
+                                });
+                        } else {
+                            Swal.fire("Error", response, "error");
+                        }
+                    },
+                    error: function() {
+                        Swal.fire("Error", "An error occurred. Please try again.", "error");
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
