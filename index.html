@@ -3,89 +3,26 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BloxLuck - Home</title>
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="css/coin.css">
-    <script src="js/jquery.min.js"></script>
-    <script src="js/sweetalert2.all.min.js"></script>
+    <title>Game Page</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <header>
-        <h1>Welcome to BloxLuck</h1>
-    </header>
+    <div class="main-container">
+        <!-- Main content section -->
+        <div class="content-wrapper">
+            <h1>Welcome to the Game</h1>
+            <p>Play and challenge other users in exciting game matches!</p>
 
-    <!-- Main Content -->
-    <section id="coinflip">
-        <h2>Coinflip Matches</h2>
-        <!-- Matches will appear here dynamically -->
-        <div id="matchesContainer">
-            <!-- Example match -->
-            <div class="match">
-                <p>Match #1</p>
-                <button class="startMatch">Join Coinflip</button>
-            </div>
-            <div class="match">
-                <p>Match #2</p>
-                <button class="startMatch">Join Coinflip</button>
-            </div>
+            <!-- Login button -->
+            <button class="login-btn" onclick="login()">Login to Play</button>
         </div>
-    </section>
-
-    <section id="giveaways">
-        <h2>Active Giveaways</h2>
-        <!-- Giveaways will be displayed here -->
-        <div id="giveawayContainer">
-            <div class="giveaway">
-                <p>Giveaway 1</p>
-                <button class="enterGiveaway">Enter Giveaway</button>
-            </div>
-            <div class="giveaway">
-                <p>Giveaway 2</p>
-                <button class="enterGiveaway">Enter Giveaway</button>
-            </div>
-        </div>
-    </section>
-
-    <!-- Profit Section (hidden until login) -->
-    <section id="userInfo" style="display: none;">
-        <h2>Your Profit</h2>
-        <p id="profit">You have $0 in profit</p>
-    </section>
-
-    <!-- Login Button -->
-    <button id="loginBtn">Login</button>
-
+    </div>
+    
     <script>
-        // On page load, check if the user is logged in (simulated here with a flag)
-        let isLoggedIn = false; // Change this based on actual login state (e.g., via session or cookie)
-
-        // Show login button if not logged in, otherwise show profit and user info
-        if (isLoggedIn) {
-            document.getElementById("userInfo").style.display = "block"; // Show user info when logged in
-            document.getElementById("loginBtn").style.display = "none"; // Hide login button when logged in
+        function login() {
+            // Implement the login logic here (can redirect to a login page or show a login modal)
+            alert('Login functionality will go here!');
         }
-
-        // Add event listener for login button to redirect to login.html
-        document.getElementById("loginBtn").addEventListener("click", function() {
-            window.location.href = "https://exagerateur.github.io/BloxBux/php/login.html";
-        });
-
-        // Example of how to handle starting a coinflip match
-        document.querySelectorAll(".startMatch").forEach(button => {
-            button.addEventListener("click", function() {
-                Swal.fire('You joined the coinflip match!');
-                // Additional logic to start the match goes here
-            });
-        });
-
-        // Example of how to handle entering a giveaway
-        document.querySelectorAll(".enterGiveaway").forEach(button => {
-            button.addEventListener("click", function() {
-                Swal.fire('You entered the giveaway!');
-                // Additional logic to enter the giveaway goes here
-            });
-        });
     </script>
-
 </body>
 </html>
