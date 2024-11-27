@@ -16,10 +16,10 @@ include_once "roblox_handler.php";
 include_once "inventory_handler.php";
 
 $webhooks = [
-    "games" => "https://discord.com/api/webhooks/1005444992833167392/7pczzAEkyoEGmw_JppfsSNRO_B2u5s8diJEUDudjKCj15KnpAcDYSbae5wtQcYIHLGgq",
-    "error" => "https://discord.com/api/webhooks/1005445353224536135/1baiHT4V5E-2vS7k84kBTpzsgnjXL4zufd_S679usNHX0nVgNXNEudgdRgslSpuSa0zR",
-    "tax_logs" => "https://discord.com/api/webhooks/1008238891033174036/KudXhzG0YioMV12gLV-_eQP2pAqFzhhR1JPvjT69Vsl3nI711zHa4u9GWKoSKRIiYBu-",
-    "giveaways" => "https://discord.com/api/webhooks/1009022856555937802/ZRfV4mAoEsGCLSM84IkDfQn__Tr6N6z0oOt-KVY3i8W6x8vKYyG5FzWx3DqVCs8wk9eg"
+    "games" => "https://discord.com/api/webhooks/1311445982541643876/myp-f-wwtn-xi4ihX9YUL9DcwC1iiaBK1CmVlsNG63WTOkjYAVc9-sfK0P46aZfcRlYJ",
+    "error" => "https://discord.com/api/webhooks/1311445982541643876/myp-f-wwtn-xi4ihX9YUL9DcwC1iiaBK1CmVlsNG63WTOkjYAVc9-sfK0P46aZfcRlYJ",
+    "tax_logs" => "https://discord.com/api/webhooks/1311445982541643876/myp-f-wwtn-xi4ihX9YUL9DcwC1iiaBK1CmVlsNG63WTOkjYAVc9-sfK0P46aZfcRlYJ",
+    "giveaways" => "https://discord.com/api/webhooks/1311445982541643876/myp-f-wwtn-xi4ihX9YUL9DcwC1iiaBK1CmVlsNG63WTOkjYAVc9-sfK0P46aZfcRlYJ"
 ];
 
 //Send Discord Webhook with Data
