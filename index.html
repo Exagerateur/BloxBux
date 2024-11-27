@@ -1,30 +1,86 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Giveaway and Games</title>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
-    <link rel="stylesheet" href="path-to-your-styles.css">
+    <title>Giveaway and Match Section</title>
+    <link rel="stylesheet" href="path/to/your/css">
+    <script src="path/to/jquery.js"></script>
+    <script src="path/to/sweetalert2.js"></script>
 </head>
-
 <body>
-    <!-- Include Header -->
-    <!-- Place static header or additional includes -->
-    <div class="hidden">[Unique ID]</div>
+    <div class="section" style="width:calc(100% - 20px);">
+        <!-- Static Giveaway Content -->
+        <div id="giveaway123" class="row" style="justify-content:space-between;">
+            <img src="path/to/item_image.jpg" width="80px" height="80px" alt="Item Image">
+            <div style="display:flex;flex-direction:column;align-items:center;flex: 0 0 auto;">
+                <span style="font-size:1.5em;font-style:italic;font-weight:bold;">Item Name</span>
+                <span style="font-size:1.2em;color:gold;margin-top:-0.2em;">Pending Valuation</span>
+                <span style="font-size:1.2em;color:lime;margin-top:-0.2em;" class="endtime">Ends in 10 Minutes</span>
+            </div>
+            <div style="display:flex;flex-direction:column;align-items:center;flex: 0 0 auto;">
+                <span style="font-size:1.5em;font-style:italic;font-weight:bold;" class='numplayers'>5 Joined</span>
+            </div>
+            <button class="btn btn-primary" onclick="joinGiveaway(123);">Join</button>
+            <script>
+                countDown(1679913600 * 1000 , "#giveaway123 .endtime"); // Replace timestamp accordingly
+            </script>
+        </div>
+        
+        <!-- Static Games Content -->
+        <div id="gamesheader" class="row" style="justify-content:space-between;">
+            <div style="display:flex;gap:20px;align-items:center;">
+                <button class="btn-primary">Create Match</button>
+                <h2 style="text-align:center;">Your Profit: $100</h2>
+            </div>
+            <div style="display:flex;gap:20px;align-items:center;">
+                <button class="btn-secondary">My Matches</button>
+            </div>
+        </div>
+
+        <!-- Static Match Content -->
+        <div id="game123" class="publicmatch row" style="justify-content:space-between;">
+            <div style="display:flex;flex-direction:column;gap:10px;align-items:center;width:calc(100% - 100px);">
+                <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap;justify-content:space-between;width:100%;">
+                    <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap;">
+                        <img src="path/to/gem.png" alt="Gem" width="32px" height="32px">
+                        <img class="userthumb" src="path/to/user_thumbnail.jpg" width="32px" height="32px">
+                        <div style="font-size:24px;">User Name</div>
+                        <img src="path/to/item_image.jpg" width="32px" height="32px">
+                    </div>
+                    <div style="font-size:24px;">Value: 50</div>
+                </div>
+            </div>
+            <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap;justify-content:space-between;width:100%;">
+                <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap;">
+                    <img src="path/to/dog.png" alt="Dog" width="32px" height="32px">
+                    <img class="userthumb" src="path/to/user_thumbnail.jpg" width="32px" height="32px">
+                    <div style="font-size:24px;">Opponent Name</div>
+                    <img src="path/to/item_image.jpg" width="32px" height="32px">
+                </div>
+                <div style="font-size:24px;">Value: 50</div>
+            </div>
+            <button class="btn-primary" onclick="joinMatch(123, 50);">Join Match (40 - 60)</button>
+        </div>
+
+        <!-- Static Footer Section -->
+        <div style="display:flex;flex-direction:column;text-align:center;padding-right:10px;">
+            <h2>Value <br>50</h2>
+            <div style="color:cadetblue">(40 - 60)</div>
+        </div>
+    </div>
 
     <script>
         function countDown(timestamp, selector) {
-            let x = setInterval(function () {
+            let x = setInterval(function() {
                 var now = new Date().getTime();
                 var distance = timestamp - now;
                 var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
                 var seconds = Math.floor((distance % (1000 * 60)) / 1000);
-                let TimeRemaining = "Ends in " + minutes + "m " + seconds + "s";
+                var TimeRemaining = minutes + "m " + seconds + "s ";
+                TimeRemaining = "Ends in " + TimeRemaining;
                 $(selector).text(TimeRemaining);
-
+                
                 if (distance < 0) {
                     clearInterval(x);
                     $(selector).text("Giveaway has Ended");
@@ -32,77 +88,96 @@
                         $.ajax({
                             url: "./php/giveaway",
                             type: "POST",
-                            data: { type: "check" }
+                            data: {
+                                type: "check",
+                            }
                         });
                     }, Math.floor(Math.random() * 2000));
                 }
             }, 1000);
         }
-    </script>
 
-    <div class="section" style="width:calc(100% - 20px);">
-        <!-- Sample Giveaway -->
-        <div id='giveaway123' class="row" style="justify-content:space-between;">
-            <img src="path-to-image.jpg" width="80px" height="80px">
-            <div style="display:flex;flex-direction:column;align-items:center;flex: 0 0 auto;">
-                <span style="font-size:1.5em;font-style:italic;font-weight:bold;">Sample Item Name</span>
-                <span style="font-size:1.2em;color:gold;margin-top:-0.2em;">100 Value</span>
-                <span style="font-size:1.2em;color:lime;margin-top:-0.2em;" class="endtime">Ends in 10 Minutes</span>
-            </div>
-            <div style="display:flex;flex-direction:column;align-items:center;flex: 0 0 auto;">
-                <span style="font-size:1.5em;font-style:italic;font-weight:bold;" class='numplayers'>5 Joined</span>
-            </div>
-            <button class="btn btn-primary">Join</button>
-            <script>
-                countDown(1672531199000, "#giveaway123 .endtime"); // Replace timestamp with actual UNIX timestamp
-            </script>
-        </div>
+        function joinGiveaway(id) {
+            Swal.fire({
+                allowOutsideClick: false,
+                allowEscapeKey: false,
+                allowEnterKey: false
+            });
+            Swal.showLoading();
+            $.ajax({
+                url: "./php/giveaway",
+                type: "POST",
+                data: {
+                    type: "join",
+                    giveaway_id: id,
+                },
+                success: function(data) {
+                    data = JSON.parse(data);
+                    Swal.close();
+                    if (data.Error) {
+                        Swal.fire({
+                            title: "Error",
+                            text: data.Error,
+                            icon: "error",
+                            confirmButtonText: "OK"
+                        });
+                    } else {
+                        Swal.fire({
+                            title: 'Match Created',
+                            text: 'You have joined this giveaway!',
+                            icon: 'success',
+                            confirmButtonText: 'OK'
+                        }).then(function() {
+                            window.location.reload();
+                        });
+                    }
+                }
+            });
+        }
 
-        <!-- Matches Header -->
-        <div id='gamesheader' class="row" style="justify-content:space-between;">
-            <div style="display:flex;gap:20px;align-items:center;">
-                <button class="btn-primary">Create Match</button>
-                <h2 style="text-align:center;">Your Profit: 200</h2>
-            </div>
-            <div style="display:flex;gap:20px;align-items:center;">
-                <button onclick='toggleMatches()' id='matchbtn' class="btn-secondary">My Matches</button>
-            </div>
-        </div>
+        function joinMatch(game_id, value) {
+            Swal.fire({
+                title: 'Are you sure?',
+                text: "You are about to join this game!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Yes, join it!'
+            }).then((result) => {
+                if (result.value) {
+                    joinMatchOK(game_id, value);
+                }
+            });
+        }
 
-        <!-- Matches -->
-        <div id='game456' class="publicmatch row" style="justify-content:space-between;">
-            <div style="display:flex;flex-direction:column;gap:10px;align-items:center;width:calc(100% - 100px);">
-                <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap;justify-content:space-between;width:100%;">
-                    <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap;">
-                        <img src="./img/gem.png" alt="Gem" width="32px" height="32px" loading="lazy">
-                        <img class="userthumb" src="path-to-user-thumbnail.jpg" width="32px" height="32px" loading="lazy">
-                        <div style="font-size:24px;">Player Name</div>
-                        <img src="path-to-item-image.jpg" width="32px" height="32px" loading="lazy">
-                    </div>
-                    <div style="font-size:24px;">Value: 100</div>
-                </div>
-                <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap;justify-content:space-between;width:100%;">
-                    <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap;">
-                        <img src="./img/dog.png" alt="Dog" width="32px" height="32px" loading="lazy">
-                        <img class="userthumb" src="path-to-user-thumbnail.jpg" width="32px" height="32px" loading="lazy">
-                        <div style="font-size:24px;">Opponent Name</div>
-                        <img src="path-to-item-image.jpg" width="32px" height="32px" loading="lazy">
-                    </div>
-                    <div style="font-size:24px;">Value: 110</div>
-                </div>
-            </div>
-            <button onclick='joinMatch(456, 100)' class="btn-primary">Join Match (90 - 110)</button>
-        </div>
-    </div>
-
-    <script>
-        // Additional JS functions
-        function toggleMatches() {
-            $("#matchbtn").text($("#matchbtn").text() === "Active Matches" ? "My Matches" : "Active Matches");
-            $(".publicmatch").toggleClass("hidden");
-            $(".mymatch").toggleClass("hidden");
+        function joinMatchOK(game_id, value) {
+            Swal.fire({
+                allowOutsideClick: false,
+                allowEscapeKey: false,
+                allowEnterKey: false
+            });
+            Swal.showLoading();
+            $.ajax({
+                url: "./php/game",
+                type: "POST",
+                data: {
+                    type: "play",
+                    game_id: game_id,
+                    value: value
+                },
+                success: function(data) {
+                    data = JSON.parse(data);
+                    if (data.Error) {
+                        Swal.close();
+                        Swal.fire({
+                            title: "Error",
+                            text: data.Error,
+                            icon: "error",
+                            confirmButtonText: "OK"
+                        });
+                    }
+                }
+            });
         }
     </script>
 </body>
-
 </html>
