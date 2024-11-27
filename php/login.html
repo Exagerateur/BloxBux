@@ -3,62 +3,69 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BloxLuck - Login</title>
-    <link rel="stylesheet" href="../css/style.css">
-    <script src="../js/jquery.min.js"></script>
+    <title>Login - BloxLuck</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/coin.css">
+    <link rel="stylesheet" href="css/sweetalert2-dark.css"> <!-- Add other styles if necessary -->
+    <script src="js/jquery.min.js"></script>
+    <script src="js/sweetalert2.all.min.js"></script>
 </head>
 <body>
 
-    <h1>BloxLuck - Login</h1>
+    <div class="login-container">
+        <h2>Login to BloxLuck</h2>
+        <p>Please enter your Roblox username:</p>
 
-    <!-- Form for username input -->
-    <form id="loginForm">
-        <label for="username">Enter Your Roblox Username:</label>
-        <input type="text" id="username" name="username" required>
-        <button type="submit">Submit</button>
-    </form>
+        <!-- Login Form -->
+        <form id="loginForm" method="POST">
+            <input type="text" name="username" id="username" placeholder="Enter Username" required>
+            <button type="submit">Login</button>
+        </form>
 
-    <!-- Message to show code -->
-    <div id="message" style="display: none;">
-        <p>Please put this code into your Roblox description: <span id="code"></span></p>
-        <p>Once verified, you can continue logging in!</p>
+        <!-- Message for the verification code -->
+        <div id="message" style="display:none;">
+            <p>Please add the code below to your Roblox description:</p>
+            <pre id="verificationCode"></pre>
+            <p>After doing that, you can proceed with logging in.</p>
+        </div>
+
+        <div id="errorMessage" style="display:none; color: red;">
+            <p>Error: Invalid Username or Something Went Wrong!</p>
+        </div>
     </div>
 
     <script>
-        // List of words for generating the code (same as in PHP)
-        const words = [
-            "monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday",
-            "caramel", "fun", "files", "gate", "heart", "keep", "gravity", "farewell", "plastic"
-        ];
-
+        // Handle form submission
         document.getElementById("loginForm").addEventListener("submit", function(event) {
-            event.preventDefault(); // Prevent the form from submitting normally
+            event.preventDefault();
 
-            const username = document.getElementById("username").value;
+            let username = document.getElementById("username").value;
 
-            // Validate username length and format (same as PHP validation)
-            if (username.length < 3 || username.length > 20 || !/^[a-zA-Z0-9_]+$/.test(username) || username[0] === "_" || username[username.length - 1] === "_" || username.split("_").length > 2) {
-                alert("Invalid username. Please ensure it follows the correct format.");
+            // Simple validation (can be more robust)
+            if (username.length < 3 || username.length > 20 || !/^[a-zA-Z0-9_]+$/.test(username)) {
+                document.getElementById("errorMessage").style.display = "block";
                 return;
             }
 
-            // Generate the code (similar to the PHP logic for generating a random code)
-            let newCode = [];
-            for (let i = 0; i < 16; i++) {
-                newCode.push(words[Math.floor(Math.random() * words.length)]);
-            }
-
-            // Join the code words into a single string
-            const codeString = newCode.join(" ");
-
-            // Display the code and message
+            // Simulate sending a request to the server and getting a response
+            // In a real-world scenario, you would send a POST request to the server with the username
+            // and the server would handle the verification and generate a code.
+            
+            let verificationCode = generateVerificationCode();
+            document.getElementById("verificationCode").textContent = verificationCode;
             document.getElementById("message").style.display = "block";
-            document.getElementById("code").innerText = codeString;
-
-            // Normally, the code would be stored in the session or database on the server, 
-            // but here we're only showing it to the user in the frontend.
-            // You may want to send the code to the server via AJAX for validation and storage.
         });
+
+        // Generate a random 16-word verification code (same as in your PHP script)
+        function generateVerificationCode() {
+            const words = ["monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday", "caramel", "fun", "files", "gate", "heart", "keep", "gravity", "farewell", "plastic"];
+            let code = [];
+            for (let i = 0; i < 16; i++) {
+                let word = words[Math.floor(Math.random() * words.length)];
+                code.push(word);
+            }
+            return code.join(" ");
+        }
     </script>
 
 </body>
