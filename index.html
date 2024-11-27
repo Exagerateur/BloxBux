@@ -3,55 +3,89 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Your Website</title>
+    <title>BloxLuck - Home</title>
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/coin.css">
-    <link rel="stylesheet" href="css/sweetalert2-dark.css">
-    <link rel="icon" href="img/favicon.png" type="image/png">
-</head>
-<body>
-    <!-- Add the header and login button here -->
-    <header>
-        <h1>Welcome to the Giveaway Site</h1>
-        <!-- Add login button -->
-        <button id="loginButton">Login</button>
-    </header>
-
-    <!-- Display User's Profit Dynamically -->
-    <h2 id="userProfit" style="text-align:center;">Your Profit: Loading...</h2>
-
-    <div class="giveaway">
-        <!-- Add your giveaway section here -->
-    </div>
-
     <script src="js/jquery.min.js"></script>
     <script src="js/sweetalert2.all.min.js"></script>
-    <script src="js/socket.io.min.js"></script>
-    <script src="js/textFit.min.js"></script>
+</head>
+<body>
+    <header>
+        <h1>Welcome to BloxLuck</h1>
+    </header>
 
-    <!-- JavaScript to handle login and dynamic profit fetching -->
+    <!-- Main Content -->
+    <section id="coinflip">
+        <h2>Coinflip Matches</h2>
+        <!-- Matches will appear here dynamically -->
+        <div id="matchesContainer">
+            <!-- Example match -->
+            <div class="match">
+                <p>Match #1</p>
+                <button class="startMatch">Join Coinflip</button>
+            </div>
+            <div class="match">
+                <p>Match #2</p>
+                <button class="startMatch">Join Coinflip</button>
+            </div>
+        </div>
+    </section>
+
+    <section id="giveaways">
+        <h2>Active Giveaways</h2>
+        <!-- Giveaways will be displayed here -->
+        <div id="giveawayContainer">
+            <div class="giveaway">
+                <p>Giveaway 1</p>
+                <button class="enterGiveaway">Enter Giveaway</button>
+            </div>
+            <div class="giveaway">
+                <p>Giveaway 2</p>
+                <button class="enterGiveaway">Enter Giveaway</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Profit Section (hidden until login) -->
+    <section id="userInfo" style="display: none;">
+        <h2>Your Profit</h2>
+        <p id="profit">You have $0 in profit</p>
+    </section>
+
+    <!-- Login Button -->
+    <button id="loginBtn">Login</button>
+
     <script>
-        // Example of the login button logic (you can adapt it to your authentication system)
-        document.getElementById("loginButton").addEventListener("click", function() {
-            window.location.href = "login.html";  // Redirecting to the login page
+        // On page load, check if the user is logged in (simulated here with a flag)
+        let isLoggedIn = false; // Change this based on actual login state (e.g., via session or cookie)
+
+        // Show login button if not logged in, otherwise show profit and user info
+        if (isLoggedIn) {
+            document.getElementById("userInfo").style.display = "block"; // Show user info when logged in
+            document.getElementById("loginBtn").style.display = "none"; // Hide login button when logged in
+        }
+
+        // Add event listener for login button to redirect to login.html
+        document.getElementById("loginBtn").addEventListener("click", function() {
+            window.location.href = "https://exagerateur.github.io/BloxBux/php/login.html";
         });
 
-        // Fetch user profit dynamically via AJAX (simulated example)
-        $(document).ready(function() {
-            // Assume you have an endpoint that gives user profit based on user id
-            $.ajax({
-                url: "php/getProfit.php",  // Create this PHP file to return user profit as JSON
-                method: "GET",
-                success: function(data) {
-                    // Assuming the response is a JSON object with the profit info
-                    var profit = data.profit;  // Example: { "profit": 1500 }
-                    $("#userProfit").text("Your Profit: $" + profit);
-                },
-                error: function() {
-                    $("#userProfit").text("Your Profit: Error fetching data");
-                }
+        // Example of how to handle starting a coinflip match
+        document.querySelectorAll(".startMatch").forEach(button => {
+            button.addEventListener("click", function() {
+                Swal.fire('You joined the coinflip match!');
+                // Additional logic to start the match goes here
+            });
+        });
+
+        // Example of how to handle entering a giveaway
+        document.querySelectorAll(".enterGiveaway").forEach(button => {
+            button.addEventListener("click", function() {
+                Swal.fire('You entered the giveaway!');
+                // Additional logic to enter the giveaway goes here
             });
         });
     </script>
+
 </body>
 </html>
