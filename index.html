@@ -76,15 +76,30 @@
         </section>
     </div>
 
-    <!-- Login Form (Hidden by Default) -->
-    <div id="loginForm" class="login-form" style="display: none;">
-        <form action="login.php" method="POST">
-            <h3>Login</h3>
-            <input type="text" name="username" placeholder="Enter your Roblox Username" required>
-            <button type="submit" class="btn-primary">Login</button>
-            <button type="button" class="btn-secondary" onclick="closeLoginForm()">Cancel</button>
-        </form>
-    </div>
+    <!-- Login button to show the login prompt -->
+<button onclick="showLoginForm()" class="btn-primary mobile">Login</button>
+
+<!-- Login Form (hidden by default) -->
+<div id="loginFormContainer" style="display:none;">
+    <form id="loginForm" method="POST" action="login.php">
+        <input type="text" id="username" name="username" placeholder="Enter your Roblox Username">
+        <button type="submit">Login</button>
+    </form>
+</div>
+
+<script>
+    // Show the login form when the login button is clicked
+    function showLoginForm() {
+        document.getElementById('loginFormContainer').style.display = 'block';
+    }
+
+    // Optional: Hide the form after submission or based on user actions
+    document.getElementById('loginForm').addEventListener('submit', function(e) {
+        // Hide form when user submits the login
+        document.getElementById('loginFormContainer').style.display = 'none';
+    });
+</script>
+
 
     <!-- Footer -->
     <footer>
