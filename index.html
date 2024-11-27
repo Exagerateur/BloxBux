@@ -3,181 +3,55 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Giveaway and Match Section</title>
-    <link rel="stylesheet" href="./css/style.css">
-    <script src="./js/jquery.min.js"></script>
-    <script src="./js/sweetalert2.all.min.js"></script>
+    <title>Your Website</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/coin.css">
+    <link rel="stylesheet" href="css/sweetalert2-dark.css">
+    <link rel="icon" href="img/favicon.png" type="image/png">
 </head>
 <body>
-    <div class="section" style="width:calc(100% - 20px);">
-        <!-- Static Giveaway Content -->
-        <div id="giveaway123" class="row" style="justify-content:space-between;">
-            <img src="path/to/item_image.jpg" width="80px" height="80px" alt="Item Image">
-            <div style="display:flex;flex-direction:column;align-items:center;flex: 0 0 auto;">
-                <span style="font-size:1.5em;font-style:italic;font-weight:bold;">Item Name</span>
-                <span style="font-size:1.2em;color:gold;margin-top:-0.2em;">Pending Valuation</span>
-                <span style="font-size:1.2em;color:lime;margin-top:-0.2em;" class="endtime">Ends in 10 Minutes</span>
-            </div>
-            <div style="display:flex;flex-direction:column;align-items:center;flex: 0 0 auto;">
-                <span style="font-size:1.5em;font-style:italic;font-weight:bold;" class='numplayers'>5 Joined</span>
-            </div>
-            <button class="btn btn-primary" onclick="joinGiveaway(123);">Join</button>
-            <script>
-                countDown(1679913600 * 1000 , "#giveaway123 .endtime"); // Replace timestamp accordingly
-            </script>
-        </div>
-        
-        <!-- Static Games Content -->
-        <div id="gamesheader" class="row" style="justify-content:space-between;">
-            <div style="display:flex;gap:20px;align-items:center;">
-                <button class="btn-primary">Create Match</button>
-                <h2 style="text-align:center;">Your Profit: $100</h2>
-            </div>
-            <div style="display:flex;gap:20px;align-items:center;">
-                <button class="btn-secondary">My Matches</button>
-            </div>
-        </div>
+    <!-- Add the header and login button here -->
+    <header>
+        <h1>Welcome to the Giveaway Site</h1>
+        <!-- Add login button -->
+        <button id="loginButton">Login</button>
+    </header>
 
-        <!-- Static Match Content -->
-        <div id="game123" class="publicmatch row" style="justify-content:space-between;">
-            <div style="display:flex;flex-direction:column;gap:10px;align-items:center;width:calc(100% - 100px);">
-                <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap;justify-content:space-between;width:100%;">
-                    <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap;">
-                        <img src="./img/gem.png" alt="Gem" width="32px" height="32px">
-                        <img class="userthumb" src="path/to/user_thumbnail.jpg" width="32px" height="32px">
-                        <div style="font-size:24px;">User Name</div>
-                        <img src="path/to/item_image.jpg" width="32px" height="32px">
-                    </div>
-                    <div style="font-size:24px;">Value: 50</div>
-                </div>
-            </div>
-            <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap;justify-content:space-between;width:100%;">
-                <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap;">
-                    <img src="./img/dog.png" alt="Dog" width="32px" height="32px">
-                    <img class="userthumb" src="path/to/user_thumbnail.jpg" width="32px" height="32px">
-                    <div style="font-size:24px;">Opponent Name</div>
-                    <img src="path/to/item_image.jpg" width="32px" height="32px">
-                </div>
-                <div style="font-size:24px;">Value: 50</div>
-            </div>
-            <button class="btn-primary" onclick="joinMatch(123, 50);">Join Match (40 - 60)</button>
-        </div>
+    <!-- Display User's Profit Dynamically -->
+    <h2 id="userProfit" style="text-align:center;">Your Profit: Loading...</h2>
 
-        <!-- Static Footer Section -->
-        <div style="display:flex;flex-direction:column;text-align:center;padding-right:10px;">
-            <h2>Value <br>50</h2>
-            <div style="color:cadetblue">(40 - 60)</div>
-        </div>
+    <div class="giveaway">
+        <!-- Add your giveaway section here -->
     </div>
 
+    <script src="js/jquery.min.js"></script>
+    <script src="js/sweetalert2.all.min.js"></script>
+    <script src="js/socket.io.min.js"></script>
+    <script src="js/textFit.min.js"></script>
+
+    <!-- JavaScript to handle login and dynamic profit fetching -->
     <script>
-        function countDown(timestamp, selector) {
-            let x = setInterval(function() {
-                var now = new Date().getTime();
-                var distance = timestamp - now;
-                var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-                var seconds = Math.floor((distance % (1000 * 60)) / 1000);
-                var TimeRemaining = minutes + "m " + seconds + "s ";
-                TimeRemaining = "Ends in " + TimeRemaining;
-                $(selector).text(TimeRemaining);
-                
-                if (distance < 0) {
-                    clearInterval(x);
-                    $(selector).text("Giveaway has Ended");
-                    setTimeout(function () {
-                        $.ajax({
-                            url: "./php/giveaway",
-                            type: "POST",
-                            data: {
-                                type: "check",
-                            }
-                        });
-                    }, Math.floor(Math.random() * 2000));
-                }
-            }, 1000);
-        }
+        // Example of the login button logic (you can adapt it to your authentication system)
+        document.getElementById("loginButton").addEventListener("click", function() {
+            window.location.href = "login.html";  // Redirecting to the login page
+        });
 
-        function joinGiveaway(id) {
-            Swal.fire({
-                allowOutsideClick: false,
-                allowEscapeKey: false,
-                allowEnterKey: false
-            });
-            Swal.showLoading();
+        // Fetch user profit dynamically via AJAX (simulated example)
+        $(document).ready(function() {
+            // Assume you have an endpoint that gives user profit based on user id
             $.ajax({
-                url: "./php/giveaway",
-                type: "POST",
-                data: {
-                    type: "join",
-                    giveaway_id: id,
-                },
+                url: "php/getProfit.php",  // Create this PHP file to return user profit as JSON
+                method: "GET",
                 success: function(data) {
-                    data = JSON.parse(data);
-                    Swal.close();
-                    if (data.Error) {
-                        Swal.fire({
-                            title: "Error",
-                            text: data.Error,
-                            icon: "error",
-                            confirmButtonText: "OK"
-                        });
-                    } else {
-                        Swal.fire({
-                            title: 'Match Created',
-                            text: 'You have joined this giveaway!',
-                            icon: 'success',
-                            confirmButtonText: 'OK'
-                        }).then(function() {
-                            window.location.reload();
-                        });
-                    }
-                }
-            });
-        }
-
-        function joinMatch(game_id, value) {
-            Swal.fire({
-                title: 'Are you sure?',
-                text: "You are about to join this game!",
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonText: 'Yes, join it!'
-            }).then((result) => {
-                if (result.value) {
-                    joinMatchOK(game_id, value);
-                }
-            });
-        }
-
-        function joinMatchOK(game_id, value) {
-            Swal.fire({
-                allowOutsideClick: false,
-                allowEscapeKey: false,
-                allowEnterKey: false
-            });
-            Swal.showLoading();
-            $.ajax({
-                url: "./php/game",
-                type: "POST",
-                data: {
-                    type: "play",
-                    game_id: game_id,
-                    value: value
+                    // Assuming the response is a JSON object with the profit info
+                    var profit = data.profit;  // Example: { "profit": 1500 }
+                    $("#userProfit").text("Your Profit: $" + profit);
                 },
-                success: function(data) {
-                    data = JSON.parse(data);
-                    if (data.Error) {
-                        Swal.close();
-                        Swal.fire({
-                            title: "Error",
-                            text: data.Error,
-                            icon: "error",
-                            confirmButtonText: "OK"
-                        });
-                    }
+                error: function() {
+                    $("#userProfit").text("Your Profit: Error fetching data");
                 }
             });
-        }
+        });
     </script>
 </body>
 </html>
