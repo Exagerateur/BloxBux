@@ -43,5 +43,5 @@ $socketurl = strpos($_SERVER['HTTP_HOST'], "morbius..ml") !== false?"socket.blox
 $maxGameItems = 8;
 $minimumTotalTaxItems = 8; // Set To Above maxGameItems * 2 to Disable
 $minimumTotalTaxValue = 1000;
-$taxRecieverId = 94125852;
+$taxRecieverId = 7585818271;
 ?>
